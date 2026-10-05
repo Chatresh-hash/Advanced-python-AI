@@ -162,6 +162,8 @@ Different Types of Accounts Calculating Interest, Implementing Different Types o
 #
 #Step 1: Define Abstract Base Class
 #Import Modules: Import ABC and abstractmethod from the abc module.
+
+from abc import ABC, abstractmethod
 #
 #Define Abstract Class: Create an abstract class named Account with an abstract method calculate_interest.
 #
@@ -197,14 +199,39 @@ class Savingsaccount(Account):
 SA = Savingsaccount('SA123', 'Sreehari', 10000)
 print("SA account interest:", SA.calculate_interest())
 
-
-
-
-
-
 #Step 3: Implement Different Loan Types
 #Define Abstract Loan Class: Create an abstract class named Loan with an abstract method calculate_payment.
-#
+class Loan(ABC):
+    @abstractmethod
+    def calculate_payment(self):
+        pass
+
 #Define Loan Subclasses: Create subclasses for different loan types (HomeLoan, AutoLoan).
-#
+class HomeLoan(Loan):
+    def __init__(self, principal, rate, years):
+        self.principal = principal
+        self.rate = rate
+        self.years = years
+
+    def calculate_payment(self):
+        monthly_rate = self.rate / 12 / 100
+        months = self.years * 12
+        return self.principal * monthly_rate / (1 - (1 + monthly_rate) ** -months)
+
+class AutoLoan(Loan):
+    def __init__(self, principal, rate, years):
+        self.principal = principal
+        self.rate = rate
+        self.years = years
+
+    def calculate_payment(self):
+        monthly_rate = self.rate / 12 / 100
+        months = self.years * 12
+        return self.principal * monthly_rate / (1 - (1 + monthly_rate) ** -months)
+
 #Implement Abstract Method: Implement the calculate_payment method in each subclass with specific payment calculations.
+home_loan = HomeLoan(200000, 7.5, 20)
+auto_loan = AutoLoan(30000, 5.5, 5)
+
+print("Home Loan Payment:", round(home_loan.calculate_payment(), 2))
+print("Auto Loan Payment:", round(auto_loan.calculate_payment(), 2))
