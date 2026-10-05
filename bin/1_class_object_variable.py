@@ -6,6 +6,8 @@ Class: Class Objects and Class Variables
 # CLASS OBJECTS: 1) Company, 2) Employee1, 3) Employee2
 # CLASS VARIABLES: 1) name, salary in Employee class, 2) name inside Company class
 # ------------------
+Course_id =  1100
+print(Course_id,type(Course_id))
 
 class Company:
     # Class variable
